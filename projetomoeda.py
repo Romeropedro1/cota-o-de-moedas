@@ -1,30 +1,19 @@
-from  tkinter import *
-from tkinter import ttk
+import requests
 
-janela = Tk()
-janela.title ('flores da favela')
+def pegar_cotacoes():
+    requisicao = requests.get("https://economia.awesomeapi.com.br/last/USD-BRL,EUR-BRL,BTC-BRL")
 
+    requisicao_dic = requisicao.json()
 
+    cotacao_dolar = requisicao_dic['USDBRL']['bid']
+    cotacao_euro = requisicao_dic['EURBRL']['bid']
+    cotacao_btc = requisicao_dic['BTCBRL']['bid']
 
-ree = ttk.Treeview(janela, selectmode="browse", column= ("column1","column2","column3","column4"), show='headings')
+    texto = f'''
+    Dólar: {cotacao_dolar}
+    Euro: {cotacao_euro}
+    BTC: {cotacao_btc}'''
 
-tree.column("column", width=200, minwidth=50, stretch=NO)
-tree.heading("#1",text='nome')
+    print(texto)
 
-tree.column("column", width=100, minwidth=50, stretch=NO)
-tree.heading("#2",text='idade')
-
-tree.column("column", width=300, minwidth=50, stretch=NO)
-tree.heading("#3",text='Endereço')
-
-tree.column("column", width=200, minwidth=50, stretch=NO)
-tree.heading("#4",text='Id')
-
-tree.grid(row=0, column=0)
-
-
-
-
-
-
-janela.mainloop()
+pegar_cotacoes()
